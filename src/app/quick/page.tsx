@@ -26,7 +26,7 @@ const Quick = () => {
         }
     }
     const restart = () => {
-        setStartTime(120)
+        setStartTime(100)
         setCurrentQuestion(0)
         setSelectedAnswer(null)
         setResult([])
@@ -107,10 +107,10 @@ const Quick = () => {
             </div>
             <div className='w-full mt-auto  py-5 px-3'>
                 {checked ? <button onClick={restart}
-                                   className={`flex justify-center items-center w-full text-center px-5 py-2 rounded bg-[#64CCC5] text-gray-900 font-semibold group ${selectedAnswer !== null ? "pointer-events-auto" : "pointer-events-none opacity-60"}`}>
+                                   className={`flex justify-center items-center w-full text-center px-5 py-2 rounded bg-[#64CCC5] text-gray-900 font-semibold`}>
                     Restart
                 </button> : <button onClick={nextQuestion}
-                                    className={`flex justify-center items-center w-full text-center px-5 py-2 rounded bg-[#64CCC5] text-gray-900 font-semibold group ${selectedAnswer !== null ? "pointer-events-auto" : "pointer-events-none opacity-60"}`}>
+                                    className={`flex justify-center items-center w-full text-center px-5 py-2 rounded bg-[#64CCC5] text-gray-900 font-semibold group`}>
                     {currentQuestion !== QUESTIONS.questions.length - 1 ? "Next" : "Check"}
                     <BsArrowRight className='text-xl group-hover:translate-x-2 transition'/>
                 </button>}
