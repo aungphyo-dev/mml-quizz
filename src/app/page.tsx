@@ -1,6 +1,13 @@
+"use client"
 import Link from "next/link";
+import {useRouter} from "next/navigation";
+import {useEffect} from "react";
 
 const Home = () => {
+    const router = useRouter();
+    useEffect(() => {
+        router.prefetch("/quick")
+    }, [router]);
     return (
         <div className='h-screen max-w-[500px] mx-auto bg-[#04364A] py-5 px-3 flex flex-col'>
             <div className='w-full'>

@@ -11,14 +11,18 @@ const Quick = () => {
     const [currentQuestion, setCurrentQuestion] = useState<number>(0)
     const [selectedAnswer, setSelectedAnswer] = useState<any>(null)
     const [result, setResult] = useState<any>([])
-    const [startTime, setStartTime] = useState<number>(120)
+    const [startTime, setStartTime] = useState<number>(100)
+    const [correctCount, setCorrectCount] = useState(0)
     const nextQuestion = () => {
         setResult([...result, selectedAnswer])
-        if (currentQuestion === QUESTIONS.questions.length - 1) {
-            setChecked(true)
-        } else {
+        if (QUESTIONS.questions[currentQuestion].correctIndex === selectedAnswer){
+            setCorrectCount(prevState => prevState + 1)
+        }
+        if (currentQuestion !== QUESTIONS.questions.length - 1) {
             setCurrentQuestion((prev: any) => prev + 1)
             setSelectedAnswer(null)
+        }else {
+            setChecked(true)
         }
     }
     const restart = () => {
@@ -34,7 +38,7 @@ const Quick = () => {
             }, 1000);
         if  (startTime === 0) setChecked(true)
         return () => clearInterval(interval);
-    }, [startTime]);
+    }, [startTime,checked]);
     return (
         <div className='min-h-screen max-w-[500px] mx-auto bg-[#04364A] flex flex-col'>
             <div
@@ -46,15 +50,19 @@ const Quick = () => {
                     className='text-xl font-semibold text-[#DAFFFB] text-center'>Result</h1>:<h1
                     className='text-xl font-semibold text-[#DAFFFB] text-center'>Question {currentQuestion + 1}/{QUESTIONS.totalQuestions}</h1>}
             </div>
-            <div className="w-full flex justify-between items-center px-3">
-                <h1 className='text-xl font-semibold text-[#DAFFFB]'>{checked ? "Your score time" :"Your time Left"}</h1>
+            {checked && <div className='px-3 w-full flex justify-between items-center text-xl font-semibold text-[#DAFFFB]'>
+                <div>Your score</div>
+                <div>{correctCount}</div>
+            </div>}
+            {!checked && <div className="w-full flex justify-between items-center px-3">
+                <h1 className='text-xl font-semibold text-[#DAFFFB]'>Your time Left</h1>
                 <div className="w-[50px] h-[50px] bg-gray-400 rounded-full grid place-items-center"
                      style={{background: `conic-gradient(#7d2ae8 ${startTime * 3.6}deg,#ededed 0deg)`}}>
                     <div className="w-[40px] h-[40px] rounded-full bg-white text-sm grid place-items-center">
                         {startTime} s
                     </div>
                 </div>
-            </div>
+            </div>}
             <div className='w-full py-5 px-3'>
                 {checked ?
                     <div className="w-full">
@@ -64,14 +72,20 @@ const Quick = () => {
                                     {question.question}
                                 </li>
                                 <li
-                                    className={`inline-flex items-center justify-between w-full p-2 border border-[#176B87] rounded text-[#DAFFFB] bg-[#176B87]`}>
-                                    {question.answers[question.correctIndex]}
-                                    <GiCheckMark className='text-lg'/>
+                                    className={`w-full p-2 border border-[#176B87] rounded text-[#DAFFFB] bg-[#176B87]`}>
+                                    <div className="w-full font-semibold mb-2 text-white">Correct Answer:</div>
+                                    <div className='w-full inline-flex items-center justify-between'>
+                                        {question.answers[question.correctIndex]}
+                                        <GiCheckMark className='text-lg'/>
+                                    </div>
                                 </li>
                                 {question.correctIndex !== result[index] && <li
-                                    className={`inline-flex items-center justify-between w-full p-2 border border-[#176B87] rounded  text-red-500 bg-[#176B87]`}>
-                                    {question.answers[result[index]]}
-                                    <HiOutlineXMark className="text-xl"/>
+                                    className={`w-full p-2 border border-[#176B87] rounded  text-red-500 bg-[#176B87]`}>
+                                    <div className="w-full font-semibold mb-2 text-white">Your Answer:</div>
+                                    <div className="w-full inline-flex items-center justify-between ">
+                                        {question.answers[result[index]] ? question.answers[result[index]] : "Not answer!" }
+                                        <HiOutlineXMark className="text-xl"/>
+                                    </div>
                                 </li>}
                             </ul>))}
                     </div>
@@ -97,7 +111,7 @@ const Quick = () => {
                     Restart
                 </button> : <button onClick={nextQuestion}
                                     className={`flex justify-center items-center w-full text-center px-5 py-2 rounded bg-[#64CCC5] text-gray-900 font-semibold group ${selectedAnswer !== null ? "pointer-events-auto" : "pointer-events-none opacity-60"}`}>
-                    Next
+                    {currentQuestion !== QUESTIONS.questions.length - 1 ? "Next" : "Check"}
                     <BsArrowRight className='text-xl group-hover:translate-x-2 transition'/>
                 </button>}
             </div>
