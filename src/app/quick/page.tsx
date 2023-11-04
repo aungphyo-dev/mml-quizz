@@ -43,7 +43,7 @@ const Quick = () => {
     }, []);
     const [checked, setChecked] = useState(false)
     const [currentQuestion, setCurrentQuestion] = useState(0)
-    const [selectedAnswer, setSelectedAnswer] = useState(null)
+    const [selectedAnswer, setSelectedAnswer] = useState<null|number>(null)
     const [result, setResult] = useState<any>([])
     const [startTime, setStartTime] = useState(100)
     const [correctCount, setCorrectCount] = useState(0)
