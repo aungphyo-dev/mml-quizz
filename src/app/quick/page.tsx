@@ -8,7 +8,7 @@ import {HiOutlineXMark} from "react-icons/hi2";
 const Quick = () => {
     const [questions, setQuestions] = useState<any>(null)
     const [randomQuestions, setRandomQuestions] = useState<any>([])
-    const [isLoading, setIsLoading] = useState<boolean>(true)
+    const [isLoading, setIsLoading] = useState(true)
     function getRandomNumber(count : number) {
         for (let i = 0; i < count; i++) {
             const randomData = questions.data[Math.floor(Math.random() * questions.data.length)];
@@ -21,13 +21,14 @@ const Quick = () => {
             getRandomNumber(10);
         }
     }, [isLoading]);
-    const token = process.env.NEXT_API_TOKEN;
+    // const token = process.env.NEXT_API_TOKEN;
+    // console.log(`Bearer ${token}`)
     const getQuestions = async () => {
         setIsLoading(true)
         try {
             const res = await fetch("https://api.mahawthada.com.mm/api/v1/questions",{
                 headers:{
-                    "Authorization" : `Bearer ${token}`
+                    "Authorization" : `Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7Il9pZCI6IjY0ZDFjOTk1NWU1MzIyM2Q1MTA0MmM3MSIsInVzZXJuYW1lIjoiYWRtaW4iLCJtYWlsIjoiYWRtaW5AYWRtaW4uY29tIiwicGFzc3dvcmQiOiJmODY1YjUzNjIzYjEyMWZkMzRlZTU0MjZjNzkyZTVjMzNhZjhjMjI3Iiwicm9sZUxhYmVsIjoiQWRtaW4iLCJjcmVhdGVkX2F0IjoiMjAyMy0wOC0wOFQwNDo1MDoyOS4wODZaIiwidXBkYXRlZF9hdCI6IjIwMjMtMDgtMDhUMDQ6NTA6MjkuMDg2WiIsIl9fdiI6MH0sImV4cCI6MTY5OTAzMTQyMjkzMCwiaWF0IjoxNjk5MDA5ODIyfQ.hr1hMgOQIycT2bZjluxgLTI2uRKFoLqyxFK99LsUYZ3RDMGefIqJ6CFW0r6yCvVplv2EVovAtI_Gj1URw7yqCZHO8-amnNfu7EtivGH_NgGJBo1pTf15SNYsIkk8mMuxOoMfpnJ1qZc5dCnB_g_hdWjXrtWjrDurKKRyuIsoquh_B2HUldTn_GSwBY9oIiF0ZBJMFIciW19SGlbiEvgDEUyzKV-pGdQYbqVSJR2UVE1BrFtGW8-6Zt5U-kyrKzXYJDtFfnhUdwGASdQktLs8V3jkJ3kVmRBlqni85XcTB-R01PgSyxLy-juym2_D61t-47mst4crY2igQJtmTyBhSA`
                 }
             })
             const data = await  res.json();
@@ -40,11 +41,11 @@ const Quick = () => {
     useEffect(() => {
         getQuestions()
     }, []);
-    const [checked, setChecked] = useState<boolean>(false)
-    const [currentQuestion, setCurrentQuestion] = useState<number>(0)
-    const [selectedAnswer, setSelectedAnswer] = useState<any>(null)
+    const [checked, setChecked] = useState(false)
+    const [currentQuestion, setCurrentQuestion] = useState(0)
+    const [selectedAnswer, setSelectedAnswer] = useState(null)
     const [result, setResult] = useState<any>([])
-    const [startTime, setStartTime] = useState<number>(100)
+    const [startTime, setStartTime] = useState(100)
     const [correctCount, setCorrectCount] = useState(0)
     const nextQuestion = () => {
         setResult([...result, selectedAnswer])
