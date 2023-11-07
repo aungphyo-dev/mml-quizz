@@ -15,7 +15,7 @@ const QuickQuestions = ({questions}:RootQuestion) => {
     const [selectedAnswer, setSelectedAnswer] = useState<null|number>(null)
     const [result, setResult] = useState<any>([])
     const [correctCount, setCorrectCount] = useState(0)
-    const randomQuestions = useGenerateRandomQuicks(questions,5)
+    const randomQuestions = useGenerateRandomQuicks(questions,10)
     const nextQuestion = () => {
         setResult([...result, selectedAnswer])
         if (randomQuestions[currentQuestion].correct_index === selectedAnswer){
